@@ -2,7 +2,7 @@
 
 namespace Controllers\Mantenimientos\Productos;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Producto\Categorias as CategoriasDAO;
 use Error;
 use Utilities\Site;
@@ -12,7 +12,7 @@ use Views\Renderer;
 const LIST_URL = "index.php?page=Mantenimientos-Productos-Categorias";
 const XSR_KEY = "xsrToken_categorias";
 
-class Categoria extends PublicController
+class Categoria extends PrivateController
 {
     private array $viewData;
     private array $estados;
