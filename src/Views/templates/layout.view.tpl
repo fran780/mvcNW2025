@@ -34,7 +34,7 @@
         {{endfor PUBLIC_NAVIGATION}}
       </ul>
     </nav>
-    <span>{{if ~CART_ITEMS}}{{~CART_ITEMS}}{{endif ~CART_ITEMS}}</span>
+    <span>{{if ~CART_ITEMS}}<i class="fa-solid fa-cart-shopping"></i>{{~CART_ITEMS}}{{endif ~CART_ITEMS}}</span>
   </header>
   <main>
     {{{page_content}}}
