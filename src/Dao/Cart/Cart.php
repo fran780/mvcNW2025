@@ -6,7 +6,7 @@ class Cart extends \Dao\Table
 {
     public static function getProductosDisponibles()
     {
-        $sqlAllProductosActivos = "SELECT * from products where productStatus in ('ACT');";
+        $sqlAllProductosActivos = "SELECT * from  electronics_products where productStatus in ('ACT');";
         $productosDisponibles = self::obtenerRegistros($sqlAllProductosActivos, array());
 
         //Sacar el stock de productos con carretilla autorizada
@@ -51,7 +51,7 @@ class Cart extends \Dao\Table
 
     public static function getProductoDisponible($productId)
     {
-        $sqlAllProductosActivos = "SELECT * from products where productStatus in ('ACT') and productId=:productId;";
+        $sqlAllProductosActivos = "SELECT * from electronics_products where productStatus in ('ACT') and productId=:productId;";
         $productosDisponibles = self::obtenerRegistros($sqlAllProductosActivos, array("productId" => $productId));
 
         //Sacar el stock de productos con carretilla autorizada
@@ -121,12 +121,12 @@ class Cart extends \Dao\Table
 
     public static function getAnonCart(string $anonCod)
     {
-        return self::obtenerRegistros("SELECT a.*, b.crrctd, b.crrprc, b.crrfching FROM products a inner join carretillaanon b on a.productId = b.productId where b.anoncod=:anoncod;", ["anoncod" => $anonCod]);
+        return self::obtenerRegistros("SELECT a.*, b.crrctd, b.crrprc, b.crrfching FROM electronics_products a inner join carretillaanon b on a.productId = b.productId where b.anoncod=:anoncod;", ["anoncod" => $anonCod]);
     }
 
     public static function getAuthCart(int $usercod)
     {
-        return self::obtenerRegistros("SELECT a.*, b.crrctd, b.crrprc, b.crrfching FROM products a inner join carretilla b on a.productId = b.productId where b.usercod=:usercod;", ["usercod" => $usercod]);
+        return self::obtenerRegistros("SELECT a.*, b.crrctd, b.crrprc, b.crrfching FROM electronics_products a inner join carretilla b on a.productId = b.productId where b.usercod=:usercod;", ["usercod" => $usercod]);
     }
 
     public static function addToAuthCart(
@@ -168,7 +168,7 @@ class Cart extends \Dao\Table
 
     public static function getProducto($productId)
     {
-        $sqlAllProductosActivos = "SELECT * from products where productId=:productId;";
+        $sqlAllProductosActivos = "SELECT * from electronics_products where productId=:productId;";
         $productosDisponibles = self::obtenerRegistros($sqlAllProductosActivos, array("productId" => $productId));
         return $productosDisponibles;
     }

@@ -7,7 +7,7 @@ CREATE TABLE
         `saleEnd` datetime NOT NULL,
         PRIMARY KEY (`saleId`),
         KEY `fk_sales_products_idx` (`productId`),
-        CONSTRAINT `fk_sales_products` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+        CONSTRAINT `fk_sales_products` FOREIGN KEY (`productId`) REFERENCES `electronics_products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE
@@ -18,11 +18,11 @@ CREATE TABLE
         `highlightEnd` datetime NOT NULL,
         PRIMARY KEY (`highlightId`),
         KEY `fk_highlights_products_idx` (`productId`),
-        CONSTRAINT `fk_highlights_products` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+        CONSTRAINT `fk_highlights_products` FOREIGN KEY (`productId`) REFERENCES `electronics_products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -40,7 +40,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -58,7 +58,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -76,7 +76,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -94,7 +94,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -112,7 +112,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -130,7 +130,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -148,7 +148,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -166,7 +166,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -184,7 +184,7 @@ VALUES (
     );
 
 INSERT INTO
-    `products` (
+    `electronics_products` (
         `productId`,
         `productName`,
         `productDescription`,
@@ -276,5 +276,3 @@ VALUES (
         '2023-08-01 00:00:00',
         '2023-10-31 23:59:59'
     );
-
-    //implementado

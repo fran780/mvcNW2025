@@ -1,5 +1,5 @@
 CREATE TABLE
-    `products` (
+    `electronics_products` (
         `productId` int(11) NOT NULL AUTO_INCREMENT,
         `productName` varchar(255) NOT NULL,
         `productDescription` text NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE
         PRIMARY KEY (`usercod`, `productId`),
         INDEX `productId_idx` (`productId` ASC),
         CONSTRAINT `carretilla_user_key` FOREIGN KEY (`usercod`) REFERENCES `usuario` (`usercod`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-        CONSTRAINT `carretilla_prd_key` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+        CONSTRAINT `carretilla_prd_key` FOREIGN KEY (`productId`) REFERENCES `electronics_products` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
     );
 
 CREATE TABLE
@@ -32,7 +32,7 @@ CREATE TABLE
         `crrfching` datetime NOT NULL,
         PRIMARY KEY (`anoncod`, `productId`),
         INDEX `productId_idx` (`productId` ASC),
-        CONSTRAINT `carretillaanon_prd_key` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+        CONSTRAINT `carretillaanon_prd_key` FOREIGN KEY (`productId`) REFERENCES `electronics_products` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
     );
 
     //implementado

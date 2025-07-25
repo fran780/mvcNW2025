@@ -2,20 +2,20 @@
 
 namespace Controllers\Mantenimientos\Productos;
 
-use Dao\Mantenimientos\Productos\Products as ProductsDao;
+use Dao\Mantenimientos\Productos\Products as ProductosDao;
 use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Site;
 
-class ProductsForm extends PublicController
+class ProductosForm extends PublicController
 {
     private $viewData = [];
     private $mode = "DSP";
     private $modeDsc = [
-        "DSP" => "View Products",
-        "INS" => "Add Products",
-        "UPD" => "Update Products",
-        "DEL" => "Delete Products"
+        "DSP" => "View Productos",
+        "INS" => "Add Productos",
+        "UPD" => "Update Productos",
+        "DEL" => "Delete Productos"
     ];
 
     private $isReadOnly = "readonly";
@@ -49,7 +49,7 @@ class ProductsForm extends PublicController
         if (
             $this->productId > 0
         ) {
-            $products = ProductsDao::getByPrimaryKey($this->productId);
+            $products = ProductosDao::getByPrimaryKey($this->productId);
             if ($products) {
                 $this->productId = $products["productId"];
                 $this->productName = $products["productName"];
@@ -108,7 +108,7 @@ class ProductsForm extends PublicController
     {
         switch ($this->mode) {
             case "INS":
-                $inserted = ProductsDao::add(
+                $inserted = ProductosDao::add(
                     $this->productName,
                     $this->productDescription,
                     $this->productPrice,
@@ -118,7 +118,7 @@ class ProductsForm extends PublicController
                 );
                 if ($inserted) {
                     Site::redirectToWithMsg(
-                        "index.php?page=Mantenimientos\Productos_ProductsList",
+                        "index.php?page=Productos_ProductosList",
                         "Registro Agregado Exitosamente"
                     );
                 } else {
@@ -126,7 +126,7 @@ class ProductsForm extends PublicController
                 }
                 break;
             case "UPD":
-                $updated = ProductsDao::update(
+                $updated = ProductosDao::update(
                     $this->productId,
                     $this->productName,
                     $this->productDescription,
@@ -137,7 +137,7 @@ class ProductsForm extends PublicController
                 );
                 if ($updated) {
                     Site::redirectToWithMsg(
-                        "index.php?page=Mantenimientos_Productos_ProductsList",
+                        "index.php?page=Productos_ProductosList",
                         "Registro Actualizado Exitosamente"
                     );
                 } else {
@@ -145,10 +145,10 @@ class ProductsForm extends PublicController
                 }
                 break;
             case "DEL":
-                $deleted = ProductsDao::delete($this->productId);
+                $deleted = ProductosDao::delete($this->productId);
                 if ($deleted) {
                     Site::redirectToWithMsg(
-                        "index.php?page=Mantenimientos_Productos_ProductsList",
+                        "index.php?page=Productos_ProductosList",
                         "Registro Eliminado Exitosamente"
                     );
                 } else {
@@ -190,7 +190,7 @@ class ProductsForm extends PublicController
             }
         }
         $this->prepareViewData();
-        Renderer::render("mantenimientos/productos/products_form", $this->viewData);
+        Renderer::render("productos/productos_form", $this->viewData);
     }
 }
 

@@ -4,7 +4,7 @@ namespace Dao\Mantenimientos\Productos;
 
 use Dao\Table;
 
-class Products extends Table
+class Productos extends Table
 {
     public static function getAll()
     {
