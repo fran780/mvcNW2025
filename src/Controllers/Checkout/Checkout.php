@@ -23,44 +23,21 @@ class Checkout extends PublicController
         $carretilla = Cart::getAuthCart(Security::getUserId());
 
         if ($this->isPostBack()) {
-            $processPayment = true;
-
-            // ✅ Botones + y - para modificar cantidad
-            if (isset($_POST["removeOne"]) || isset($_POST["addOne"])) {
-                $productId = intval($_POST["productId"]);
-                $productoDisp = Cart::getProductoDisponible($productId);
-                $amount = isset($_POST["removeOne"]) ? -1 : 1;
-
-                if ($amount === 1) {
-                    if ($productoDisp["productStock"] - $amount >= 0) {
-                        Cart::addToAuthCart(
-                            $productId,
-                            Security::getUserId(),
-                            $amount,
-                            $productoDisp["productPrice"]
-                        );
-                    }
-                } else {
-                    Cart::addToAuthCart(
-                        $productId,
-                        Security::getUserId(),
-                        $amount,
-                        $productoDisp["productPrice"]
-                    );
-                }
-
-                // ✅ Refrescar carretilla después de actualizar cantidad
-                $carretilla = Cart::getAuthCart(Security::getUserId());
-                $processPayment = false;
+            // ✅ Cancelar compra y vaciar carretilla
+            if (isset($_POST["cancelPurchase"])) {
+                Cart::clearCart(Security::getUserId());
+                \Utilities\Context::setContext("CART_ITEMS", 0);
+                Site::redirectTo("index.php?page=Index");
+                return;
             }
 
-            // ✅ Procesar pago (solo si no fue + o -)
-            if ($processPayment) {
-                $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
-                    "test" . (time() - 10000000),
-                    "http://localhost/negociosweb/mvc/index.php?page=Checkout_Error",
-                    "http://localhost/negociosweb/mvc/index.php?page=Checkout_Accept"
-                );
+               // ✅ Procesar pago
+            $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
+                "test" . (time() - 10000000),
+                "http://localhost/negociosweb/mvc/index.php?page=Checkout_Error",
+                "http://localhost/negociosweb/mvc/index.php?page=Checkout_Accept"
+            );
+
 
                 if (!is_array($carretilla)) {
                     $carretilla = [];
@@ -96,7 +73,6 @@ class Checkout extends PublicController
                 }
                 die();
             }
-        }
 
         // ✅ Preparar datos para la vista
         $finalCarretilla = [];
