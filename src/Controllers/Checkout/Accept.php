@@ -18,11 +18,13 @@ class Accept extends PublicController
             );
             $result = $PayPalRestApi->captureOrder($session_token);
             $dataview["orderjson"] = json_encode($result, JSON_PRETTY_PRINT);
+            if ($result && isset($result->status) && $result->status === "COMPLETED") {
+                \Dao\Cart\Cart::finalizeCart(\Utilities\Security::getUserId());
+                \Utilities\Context::setContext("CART_ITEMS", 0);
+            }
         } else {
             $dataview["orderjson"] = "No Order Available!!!";
         }
         \Views\Renderer::render("paypal/accept", $dataview);
     }
 }
-
-//arreglado

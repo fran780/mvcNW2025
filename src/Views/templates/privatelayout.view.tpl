@@ -36,7 +36,7 @@
       </ul>
     </nav>
     {{with login}}
-    <a href="index.php?page=Carretilla" class="cart-icon">
+    <a href="index.php?page=Carretilla_Carretilla" class="cart-icon">
       <i class="fa-solid fa-cart-shopping"></i>
       {{if ~CART_ITEMS}}<span class="cart-count">{{~CART_ITEMS}}</span>{{endif ~CART_ITEMS}}
     </a>

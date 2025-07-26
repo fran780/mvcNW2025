@@ -103,9 +103,10 @@ class Cart extends \Dao\Table
     ) {
         $validateSql = "SELECT * from carretillaanon where anoncod = :anoncod and productId = :productId";
         $producto = self::obtenerUnRegistro($validateSql, ["anoncod" => $anonCod, "productId" => $productId]);
+
         if ($producto) {
             if ($producto["crrctd"] + $amount <= 0) {
-                $deleteSql = "DELETE from carretillaanon where usercod = :usercod and productId = :productId;";
+                $deleteSql = "DELETE from carretillaanon where anoncod = :anoncod and productId = :productId;";
                 return self::executeNonQuery($deleteSql, ["anoncod" => $anonCod, "productId" => $productId]);
             } else {
                 $updateSql = "UPDATE carretillaanon set crrctd = crrctd + :amount where anoncod = :anoncod and productId = :productId";
@@ -171,5 +172,24 @@ class Cart extends \Dao\Table
         $sqlAllProductosActivos = "SELECT * from electronics_products where productId=:productId;";
         $productosDisponibles = self::obtenerRegistros($sqlAllProductosActivos, array("productId" => $productId));
         return $productosDisponibles;
+    }
+ public static function finalizeCart(int $usercod)
+    {
+        $itemsSql = "SELECT productId, crrctd FROM carretilla WHERE usercod = :usercod;";
+        $items = self::obtenerRegistros($itemsSql, ["usercod" => $usercod]);
+
+        foreach ($items as $item) {
+            $updateSql = "UPDATE electronics_products SET productStock = productStock - :crrctd WHERE productId = :productId;";
+            self::executeNonQuery(
+                $updateSql,
+                [
+                    "crrctd" => $item["crrctd"],
+                    "productId" => $item["productId"]
+                ]
+            );
+        }
+
+        $deleteSql = "DELETE FROM carretilla WHERE usercod = :usercod;";
+        self::executeNonQuery($deleteSql, ["usercod" => $usercod]);
     }
 }

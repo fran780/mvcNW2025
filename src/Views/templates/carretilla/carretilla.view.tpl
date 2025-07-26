@@ -16,7 +16,7 @@
       <span class="col-4">{{productName}}</span>
       <span class="col-2 right">{{crrprc}}</span>
       <span class="col-3 center">
-        <form action="index.php?page=Carretilla" method="post">
+        <form action="index.php?page=Carretilla_Carretilla" method="post">
           <input type="hidden" name="productId" value="{{productId}}" />
           <button type="submit" name="removeOne" class="circle">−</button>
           <span style="padding: 0.25rem 0.5rem;">{{crrctd}}</span>
@@ -28,13 +28,16 @@
       </span>
     </div>
     {{endfor carretilla}}
-    <div class="row" style="padding: 0.5rem 1rem;align-items:center;">
+        <div class="row" style="padding: 0.5rem 1rem;align-items:center;">
       <span class="col-3 offset-7 center">Total</span>
       <span class="col-2 right">{{total}}</span>
     </div>
+
     <div class="row">
-      <a class="col-12 right" href="index.php?page=Checkout_Checkout">
-        <button>Ir al Checkout</button>
+      <a class="col-12 right" href="{{botonUrl}}">
+        <button>
+          <i class="fas fa-{{botonIcono}}"></i>&nbsp;{{botonTexto}}
+        </button>
       </a>
     </div>
   </section>
