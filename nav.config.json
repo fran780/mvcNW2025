@@ -9,11 +9,6 @@
       "id": "Menu_SignUp",
       "nav_url": "index.php?page=Sec_Register",
       "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Crear Cuenta"
-    },
-     {
-      "id": "Crud_Generator",
-      "nav_url": "index.php?page=Crud_Generator",
-      "nav_label":"<i class=\"fas fa-cogs\"></i>&nbsp;Generador CRUD"
     }
   ],
   "private": [

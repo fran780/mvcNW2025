@@ -36,7 +36,10 @@
       </ul>
     </nav>
     {{with login}}
-    <span>{{if ~CART_ITEMS}}<i class="fa-solid fa-cart-shopping"></i>{{~CART_ITEMS}}{{endif ~CART_ITEMS}}</span>
+    <a href="index.php?page=Carretilla" class="cart-icon">
+      <i class="fa-solid fa-cart-shopping"></i>
+      {{if ~CART_ITEMS}}<span class="cart-count">{{~CART_ITEMS}}</span>{{endif ~CART_ITEMS}}
+    </a>
     <span class="username">{{userName}} <a href="index.php?page=sec_logout"><i
           class="fas fa-sign-out-alt"></i></a></span>
     {{endwith login}}
