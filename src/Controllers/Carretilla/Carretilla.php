@@ -6,11 +6,13 @@ use Controllers\PublicController;
 use Dao\Cart\Cart;
 use Utilities\Security;
 use Utilities\Cart\CartFns;
+use Utilities\Site;
 
 class Carretilla extends PublicController
 {
     public function run(): void
     {
+        Site::addLink("public/css/products.css");
         $viewData = [];
 
         $userIsLogged = Security::isLogged();
@@ -68,6 +70,7 @@ class Carretilla extends PublicController
                 $carretilla = $userIsLogged
                     ? Cart::getAuthCart($userId)
                     : Cart::getAnonCart($userId);
+                $this->getCartCounter();
             }
         }
 

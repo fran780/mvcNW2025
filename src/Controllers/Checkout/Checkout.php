@@ -11,6 +11,7 @@ class Checkout extends PublicController
 {
     public function run(): void
     {
+         Site::addLink("public/css/products.css");
         // ✅ Verificar si el usuario está logueado
         if (!Security::isLogged()) {
             Site::redirectTo("index.php?page=Sec_Login&redirect=Checkout_Checkout");
