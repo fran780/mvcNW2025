@@ -27,11 +27,11 @@
                 <td>{{productStatus}}</td>
                 <td>
                     <a
-                        href="index.php?page=Productos_ProductosForm&mode=DSP&productId={{productId}}">View</a>&nbsp;
+                        href="index.php?page=Productos_ProductosForm&mode=DSP&productId={{productId}}">Ver</a>&nbsp;
                     <a
-                        href="index.php?page=Productos_ProductosFormForm&mode=UPD&productId={{productId}}">Update</a>&nbsp;
+                        href="index.php?page=Productos_ProductosForm&mode=UPD&productId={{productId}}">Actualizar</a>&nbsp;
                     <a
-                        href="index.php?page=Productos_ProductosForm&mode=DEL&productId={{productId}}">Delete</a>
+                        href="index.php?page=Productos_ProductosForm&mode=DEL&productId={{productId}}">Eliminar</a>
                 </td>
             </tr>
             {{endfor rows}}

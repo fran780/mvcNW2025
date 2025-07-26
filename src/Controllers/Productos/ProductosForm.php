@@ -2,7 +2,7 @@
 
 namespace Controllers\Mantenimientos\Productos;
 
-use Dao\Mantenimientos\Productos\Products as ProductosDao;
+use Dao\Mantenimientos\Productos\Productos as ProductosDao;
 use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Site;
@@ -12,10 +12,10 @@ class ProductosForm extends PublicController
     private $viewData = [];
     private $mode = "DSP";
     private $modeDsc = [
-        "DSP" => "View Productos",
-        "INS" => "Add Productos",
-        "UPD" => "Update Productos",
-        "DEL" => "Delete Productos"
+        "DSP" => "Ver Productos",
+        "INS" => "Añadir Productos",
+        "UPD" => "Actualizar Productos",
+        "DEL" => "Eliminar Productos"
     ];
 
     private $isReadOnly = "readonly";

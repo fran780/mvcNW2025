@@ -1,10 +1,10 @@
 <?php
 
-namespace Dao\Mantenimientos\Productos;
+namespace Dao\Productos;
 
 use Dao\Table;
 
-class Products extends Table
+class Productos extends Table
 {
     public static function getAll()
     {
