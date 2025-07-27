@@ -1,19 +1,15 @@
 <?php
 namespace Controllers\Checkout;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Transactions\Transactions;
 use Utilities\Security;
 use Utilities\Site;
 
-class History extends PublicController
+class History extends PrivateController
 {
     public function run(): void
     {
-        if (!Security::isLogged()) {
-            Site::redirectTo("index.php?page=Sec_Login&redirect=Checkout_History");
-            return;
-        }
         $userId = Security::getUserId();
         $transactions = Transactions::getByUser($userId);
         foreach ($transactions as &$txn) {

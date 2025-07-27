@@ -2,13 +2,13 @@
 
 namespace Controllers\Checkout;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Views\Renderer;
 use Dao\Transactions\Transactions;
 use Utilities\Security;
 use Utilities\Site;
 
-class HistoryDetail extends PublicController
+class HistoryDetail extends PrivateController
 {
     private $viewData = [];
     private $mode = "DSP";

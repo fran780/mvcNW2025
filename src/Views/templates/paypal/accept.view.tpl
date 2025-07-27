@@ -1,7 +1,7 @@
 <div class="container-invoice">
   {{with order}}
   {{if id}}
-  <h1>Orden Aceptada</h1>
+  <h1>Factura</h1>
   <hr />
   <section class="invoice">
     <p><strong>ID de Orden:</strong> {{id}}</p>

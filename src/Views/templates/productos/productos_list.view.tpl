@@ -1,4 +1,4 @@
-<h1>Listado de Productos</h1>
+<h1>Trabajar con Productos</h1>
 
 <section class="grid">
     <div class="row">

@@ -91,5 +91,3 @@ class Productos extends Table
 }
 
 }
-
-// nueva implementación

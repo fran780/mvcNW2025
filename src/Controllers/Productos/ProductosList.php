@@ -2,13 +2,13 @@
 
 namespace Controllers\Productos;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Productos\Productos as DaoProductos;
 use Utilities\Context;
 use Utilities\Paging;
 use Views\Renderer;
 
-class ProductosList extends PublicController
+class ProductosList extends PrivateController
 {
     private $partialName = "";
     private $status = "";
@@ -56,6 +56,13 @@ class ProductosList extends PublicController
 
         $this->pageNumber = intval($_GET["pageNum"] ?? $this->pageNumber);
         $this->itemsPerPage = intval($_GET["itemsPerPage"] ?? $this->itemsPerPage);
+
+        if ($this->pageNumber < 1) {
+            $this->pageNumber = 1;
+        }
+        if ($this->itemsPerPage < 1) {
+            $this->itemsPerPage = 10;
+        }
     }
 
     private function getParamsFromContext(): void
@@ -64,6 +71,13 @@ class ProductosList extends PublicController
         $this->status = Context::getContextByKey("productos_status");
         $this->pageNumber = intval(Context::getContextByKey("productos_page"));
         $this->itemsPerPage = intval(Context::getContextByKey("productos_itemsPerPage"));
+
+        if ($this->pageNumber < 1) {
+            $this->pageNumber = 1;
+        }
+        if ($this->itemsPerPage < 1) {
+            $this->itemsPerPage = 10;
+        }
     }
 
     private function setParamsToContext(): void

@@ -2,13 +2,13 @@
 
 namespace Controllers\Productos;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Productos\Productos as DaoProductos;
 use Utilities\Site;
 use Utilities\Validators;
 use Views\Renderer;
 
-class ProductosForm extends PublicController
+class ProductosForm extends PrivateController
 {
     private $mode = "DSP";
     private $producto = [

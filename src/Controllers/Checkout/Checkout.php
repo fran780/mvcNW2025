@@ -2,21 +2,16 @@
 
 namespace Controllers\Checkout;
 
-use Controllers\PublicController;
 use Dao\Cart\Cart;
 use Utilities\Security;
 use Utilities\Site;
+use Controllers\PrivateController;
 
-class Checkout extends PublicController
+class Checkout extends PrivateController
 {
     public function run(): void
     {
-         Site::addLink("public/css/products.css");
-        // ✅ Verificar si el usuario está logueado
-        if (!Security::isLogged()) {
-            Site::redirectTo("index.php?page=Sec_Login&redirect=Checkout_Checkout");
-            return;
-        }
+        Site::addLink("public/css/products.css");
 
         $viewData = [];
 
@@ -32,39 +27,53 @@ class Checkout extends PublicController
                 return;
             }
 
-               // ✅ Procesar pago
+            // ✅ Verificar que la carretilla no esté vacía o con cantidades inválidas
+            if (!is_array($carretilla) || count($carretilla) === 0) {
+                Site::redirectTo("index.php?page=Carretilla_Carretilla");
+                return;
+            }
+
+            $totalProductos = 0;
+            foreach ($carretilla as $producto) {
+                if ($producto["crrctd"] > 0) {
+                    $totalProductos += $producto["crrctd"];
+                }
+            }
+
+            if ($totalProductos <= 0) {
+                Site::redirectTo("index.php?page=Carretilla_Carretilla");
+                return;
+            }
+
+            // ✅ Procesar pago
             $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
                 "test" . (time() - 10000000),
                 "http://localhost/negociosweb/mvc/index.php?page=Checkout_Error",
                 "http://localhost/negociosweb/mvc/index.php?page=Checkout_Accept"
             );
 
+            $viewData["carretilla"] = $carretilla;
 
-                if (!is_array($carretilla)) {
-                    $carretilla = [];
-                }
-
-                $viewData["carretilla"] = $carretilla;
-
-                foreach ($viewData["carretilla"] as $producto) {
-                    $PayPalOrder->addItem(
-                        $producto["productName"],
-                        $producto["productDescription"],
-                        $producto["productId"],
-                        $producto["crrprc"],
-                        0,
-                        $producto["crrctd"],
-                        "DIGITAL_GOODS"
-                    );
-                }
-
-                $PayPalRestApi = new \Utilities\PayPal\PayPalRestApi(
-                    \Utilities\Context::getContextByKey("PAYPAL_CLIENT_ID"),
-                    \Utilities\Context::getContextByKey("PAYPAL_CLIENT_SECRET")
+            foreach ($viewData["carretilla"] as $producto) {
+                $PayPalOrder->addItem(
+                    $producto["productName"],
+                    $producto["productDescription"],
+                    $producto["productId"],
+                    $producto["crrprc"],
+                    0,
+                    $producto["crrctd"],
+                    "DIGITAL_GOODS"
                 );
-                $PayPalRestApi->getAccessToken();
-                $response = $PayPalRestApi->createOrder($PayPalOrder);
+            }
 
+            $PayPalRestApi = new \Utilities\PayPal\PayPalRestApi(
+                \Utilities\Context::getContextByKey("PAYPAL_CLIENT_ID"),
+                \Utilities\Context::getContextByKey("PAYPAL_CLIENT_SECRET")
+            );
+            $PayPalRestApi->getAccessToken();
+            $response = $PayPalRestApi->createOrder($PayPalOrder);
+
+            if (isset($response->id)) {
                 $_SESSION["orderid"] = $response->id;
 
                 foreach ($response->links as $link) {
@@ -72,8 +81,13 @@ class Checkout extends PublicController
                         Site::redirectTo($link->href);
                     }
                 }
-                die();
+            } else {
+                error_log("Error: respuesta inesperada de PayPal");
+                error_log(print_r($response, true));
+                Site::redirectTo("index.php?page=Checkout_Error");
             }
+            die();
+        }
 
         // ✅ Preparar datos para la vista
         $finalCarretilla = [];
