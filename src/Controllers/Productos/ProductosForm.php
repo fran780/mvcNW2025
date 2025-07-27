@@ -1,197 +1,166 @@
 <?php
 
-namespace Controllers\Mantenimientos\Productos;
+namespace Controllers\Productos;
 
-use Dao\Mantenimientos\Productos\Productos as ProductosDao;
 use Controllers\PublicController;
-use Views\Renderer;
+use Dao\Productos\Productos as DaoProductos;
 use Utilities\Site;
+use Utilities\Validators;
+use Views\Renderer;
 
 class ProductosForm extends PublicController
 {
-    private $viewData = [];
     private $mode = "DSP";
-    private $modeDsc = [
-        "DSP" => "Ver Productos",
-        "INS" => "Añadir Productos",
-        "UPD" => "Actualizar Productos",
-        "DEL" => "Eliminar Productos"
+    private $producto = [
+        "productId" => 0,
+        "productName" => "",
+        "productDescription" => "",
+        "productPrice" => 0.00,
+        "productImgUrl" => "",
+        "productStock" => 0,
+        "productStatus" => "ACT"
     ];
-
-    private $isReadOnly = "readonly";
-    private $hasErrors = false;
-    private $errors = [];
-    private $crf_token = "";
-
-    private $productId = 0;
-    private $productName = "";
-    private $productDescription = "";
-    private $productPrice = 0;
-    private $productImgUrl = "";
-    private $productStock = 0;
-    private $productStatus = "";
-
-    private function throwError($message, $scope = "global")
-    {
-        $this->hasErrors = true;
-        error_log($message);
-        if (!isset($this->errors[$scope])) {
-            $this->errors[$scope] = [];
-        }
-        $this->errors[$scope][] = $message;
-    }
-
-    private function cargarDatos()
-    {
-        $this->productId = isset($_GET["productId"]) ? intval($_GET["productId"]) : 0;
-        $this->mode = isset($_GET["mode"]) ? $_GET["mode"] : "DSP";
-
-        if (
-            $this->productId > 0
-        ) {
-            $products = ProductosDao::getByPrimaryKey($this->productId);
-            if ($products) {
-                $this->productId = $products["productId"];
-                $this->productName = $products["productName"];
-                $this->productDescription = $products["productDescription"];
-                $this->productPrice = $products["productPrice"];
-                $this->productImgUrl = $products["productImgUrl"];
-                $this->productStock = $products["productStock"];
-                $this->productStatus = $products["productStatus"];
-            }
-        }
-    }
-
-    private function getPostData()
-    {
-        $tmp_productName = isset($_POST["productName"]) ? strval($_POST["productName"]) : "";
-        $tmp_productDescription = isset($_POST["productDescription"]) ? strval($_POST["productDescription"]) : "";
-        $tmp_productPrice = isset($_POST["productPrice"]) ? floatval($_POST["productPrice"]) : 0;
-        $tmp_productImgUrl = isset($_POST["productImgUrl"]) ? strval($_POST["productImgUrl"]) : "";
-        $tmp_productStock = isset($_POST["productStock"]) ? intval($_POST["productStock"]) : 0;
-        $tmp_productStatus = isset($_POST["productStatus"]) ? strval($_POST["productStatus"]) : "";
-        $tmp_mode = isset($_POST["mode"]) ? $_POST["mode"] : "DSP";
-        $tmp_crf_token = isset($_POST["crf_token"]) ? $_POST["crf_token"] : "";
-        // Do Fields Validation
-
-        if ($this->mode !== $tmp_mode) {
-            $this->throwError("Modo de formulario inválido");
-        }
-        if (!$this->validateCsfrToken()) {
-            $this->throwError("Error de aplicación, Token CSRF Inválido");
-        }
-        $this->productName = $tmp_productName;
-        $this->productDescription = $tmp_productDescription;
-        $this->productPrice = $tmp_productPrice;
-        $this->productImgUrl = $tmp_productImgUrl;
-        $this->productStock = $tmp_productStock;
-        $this->productStatus = $tmp_productStatus;
-        $this->mode = $tmp_mode;
-    }
-
-    private function validateCsfrToken()
-    {
-        if ($this->crf_token !== $_SESSION["crf_token"]) {
-            $this->throwError("Error de aplicación, Token CSRF Inválido");
-            return false;
-        }
-        return true;
-    }
-
-    private function csfrToken()
-    {
-        $this->crf_token = md5(uniqid(rand(), true));
-        $_SESSION["crf_token"] = $this->crf_token;
-    }
-
-    private function processAction()
-    {
-        switch ($this->mode) {
-            case "INS":
-                $inserted = ProductosDao::add(
-                    $this->productName,
-                    $this->productDescription,
-                    $this->productPrice,
-                    $this->productImgUrl,
-                    $this->productStock,
-                    $this->productStatus
-                );
-                if ($inserted) {
-                    Site::redirectToWithMsg(
-                        "index.php?page=Productos_ProductosList",
-                        "Registro Agregado Exitosamente"
-                    );
-                } else {
-                    $this->throwError("Error al agregar el registro");
-                }
-                break;
-            case "UPD":
-                $updated = ProductosDao::update(
-                    $this->productId,
-                    $this->productName,
-                    $this->productDescription,
-                    $this->productPrice,
-                    $this->productImgUrl,
-                    $this->productStock,
-                    $this->productStatus,
-                );
-                if ($updated) {
-                    Site::redirectToWithMsg(
-                        "index.php?page=Productos_ProductosList",
-                        "Registro Actualizado Exitosamente"
-                    );
-                } else {
-                    $this->throwError("Error al actualizar el registro");
-                }
-                break;
-            case "DEL":
-                $deleted = ProductosDao::delete($this->productId);
-                if ($deleted) {
-                    Site::redirectToWithMsg(
-                        "index.php?page=Productos_ProductosList",
-                        "Registro Eliminado Exitosamente"
-                    );
-                } else {
-                    $this->throwError("Error al eliminar el registro");
-                }
-                break;
-        }
-    }
-
-    private function prepareViewData()
-    {
-        $this->viewData["mode"] = $this->mode;
-        $this->viewData["modeDesc"] = sprintf($this->modeDsc[$this->mode], $this->productId);
-        $this->viewData["productId"] = $this->productId;
-        $this->viewData["productName"] = $this->productName;
-        $this->viewData["productDescription"] = $this->productDescription;
-        $this->viewData["productPrice"] = $this->productPrice;
-        $this->viewData["productImgUrl"] = $this->productImgUrl;
-        $this->viewData["productStock"] = $this->productStock;
-        $this->viewData["productStatus"] = $this->productStatus;
-        if ($this->mode === "INS" || $this->mode === "UPD") {
-            $this->isReadOnly = "";
-        }
-        $this->viewData["isReadOnly"] = $this->isReadOnly;
-        $this->viewData["showAction"] = $this->mode !== "DSP";
-        $this->csfrToken();
-        $this->viewData["crf_token"] = $this->crf_token;
-        $this->viewData["hasErrors"] = $this->hasErrors;
-        $this->viewData["errors"] = $this->errors;
-    }
+    private $producto_xss_token = "";
+    private $readonly = "";
+    private $showCommitBtn = true;
+    private $viewData = [];
+    private $modeDescriptions = [
+        "DSP" => "Detalle de %s",
+        "INS" => "Nuevo Producto",
+        "UPD" => "Editar %s",
+        "DEL" => "Eliminar %s"
+    ];
 
     public function run(): void
     {
-        $this->cargarDatos();
-        if ($this->isPostBack()) {
-            $this->getPostData();
-            if (!$this->hasErrors) {
-                $this->processAction();
+        try {
+            $this->getData();
+            if ($this->isPostBack()) {
+                if ($this->validateData()) {
+                    $this->handleAction();
+                }
             }
+            $this->prepareViewData();
+            Renderer::render("productos/productos_form", $this->viewData);
+        } catch (\Exception $ex) {
+            Site::redirectToWithMsg("index.php?page=Productos_ProductosList", $ex->getMessage());
         }
-        $this->prepareViewData();
-        Renderer::render("productos/productos_form", $this->viewData);
+    }
+
+    private function getData(): void
+    {
+        $this->mode = $_GET["mode"] ?? "NOF";
+        if (!isset($this->modeDescriptions[$this->mode])) {
+            throw new \Exception("Modo inválido", 1);
+        }
+
+        $this->readonly = $this->mode === "DEL" ? "readonly" : "";
+        $this->showCommitBtn = $this->mode !== "DSP";
+
+        if ($this->mode !== "INS") {
+            $productId = intval($_GET["productId"] ?? 0);
+            $productoDB = DaoProductos::getByPrimaryKey($productId);
+            if (!$productoDB) {
+                throw new \Exception("Producto no encontrado", 1);
+            }
+            $this->producto = $productoDB;
+        }
+    }
+
+    private function validateData(): bool
+    {
+        if ($this->mode === "DEL") {
+            $this->producto["productId"] = intval($_POST["productId"] ?? 0);
+            return true;
+        }
+
+        $errors = [];
+        $this->producto_xss_token = $_POST["producto_xss_token"] ?? "";
+        if (
+            empty($this->producto_xss_token) ||
+            $this->producto_xss_token !== ($_SESSION["producto_xss_token"] ?? "")
+        ) {
+            throw new \Exception("Acceso no autorizado o token inválido", 1);
+        }
+        $this->producto["productId"] = intval($_POST["productId"] ?? 0);
+        $this->producto["productName"] = trim($_POST["productName"] ?? "");
+        $this->producto["productDescription"] = trim($_POST["productDescription"] ?? "");
+        $this->producto["productPrice"] = floatval($_POST["productPrice"] ?? 0);
+        $this->producto["productImgUrl"] = trim($_POST["productImgUrl"] ?? "");
+        $this->producto["productStock"] = intval($_POST["productStock"] ?? 0);
+        $this->producto["productStatus"] = trim($_POST["productStatus"] ?? "ACT");
+
+        if (Validators::IsEmpty($this->producto["productName"])) {
+            $errors["productName_error"] = "El nombre es requerido";
+        }
+        if (Validators::IsEmpty($this->producto["productDescription"])) {
+            $errors["productDescription_error"] = "La descripción es requerida";
+        }
+        if ($this->producto["productPrice"] <= 0) {
+            $errors["productPrice_error"] = "El precio debe ser mayor a cero";
+        }
+        if ($this->producto["productStock"] < 0) {
+            $errors["productStock_error"] = "El stock no puede ser negativo";
+        }
+
+        foreach ($errors as $key => $msg) {
+            $this->producto[$key] = $msg;
+        }
+
+        return count($errors) === 0;
+    }
+
+    private function handleAction(): void
+    {
+        switch ($this->mode) {
+            case "INS":
+                $result = DaoProductos::add(
+                    $this->producto["productName"],
+                    $this->producto["productDescription"],
+                    $this->producto["productPrice"],
+                    $this->producto["productImgUrl"],
+                    $this->producto["productStock"],
+                    $this->producto["productStatus"]
+                );
+                if ($result > 0) {
+                    Site::redirectToWithMsg("index.php?page=Productos_ProductosList", "Producto creado correctamente");
+                }
+                break;
+            case "UPD":
+                $result = DaoProductos::update(
+                    $this->producto["productId"],
+                    $this->producto["productName"],
+                    $this->producto["productDescription"],
+                    $this->producto["productPrice"],
+                    $this->producto["productImgUrl"],
+                    $this->producto["productStock"],
+                    $this->producto["productStatus"]
+                );
+                if ($result > 0) {
+                    Site::redirectToWithMsg("index.php?page=Productos_ProductosList", "Producto actualizado correctamente");
+                }
+                break;
+            case "DEL":
+                $result = DaoProductos::delete($this->producto["productId"]);
+                if ($result > 0) {
+                    Site::redirectToWithMsg("index.php?page=Productos_ProductosList", "Producto eliminado correctamente");
+                }
+                break;
+        }
+    }
+
+    private function prepareViewData(): void
+    {
+        $this->viewData["mode"] = $this->mode;
+        $this->viewData["FormTitle"] = sprintf($this->modeDescriptions[$this->mode], $this->producto["productName"] ?? "");
+        $this->viewData["producto_xss_token"] = md5(uniqid(rand(), true));
+        $_SESSION["producto_xss_token"] = $this->viewData["producto_xss_token"];
+        $this->viewData["readonly"] = $this->readonly;
+        $this->viewData["showCommitBtn"] = $this->showCommitBtn;
+
+        $statusKey = "productStatus_" . strtolower($this->producto["productStatus"]);
+        $this->producto[$statusKey] = "selected";
+
+        $this->viewData["producto"] = $this->producto;
     }
 }
-
-// implementado

@@ -9,6 +9,16 @@
       "id": "Menu_SignUp",
       "nav_url": "index.php?page=Sec_Register",
       "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Crear Cuenta"
+     },
+      {
+      "id": "Menu_Usuarios",
+      "nav_url": "index.php?page=Usuarios_Usuarios",
+      "nav_label": "<i class=\"fas fa-table\"></i>&nbsp;Usuarios"
+    },
+    {
+      "id": "Menu_TransHist",
+      "nav_url": "index.php?page=Checkout_History",
+      "nav_label": "<i class=\"fas fa-clock\"></i>&nbsp;Histórico"
     }
   ],
   "private": [

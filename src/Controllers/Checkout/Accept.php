@@ -3,6 +3,8 @@
 namespace Controllers\Checkout;
 
 use Controllers\PublicController;
+use Utilities\Security;
+use Dao\Transactions\Transactions;
 
 class Accept extends PublicController
 {
@@ -11,6 +13,7 @@ class Accept extends PublicController
         $dataview = [];
         $token = $_GET["token"] ?? "";
         $session_token = $_SESSION["orderid"] ?? "";
+        $orderId = $token;
 
         $result = null;
 
@@ -96,6 +99,15 @@ class Accept extends PublicController
             "paypal_fee" => $paypalFee,
             "net_amount" => $netAmount
         ];
+
+        Transactions::addTransaction(
+            \Utilities\Security::getUserId(),
+            $orderId,
+            $result->status ?? "",
+            floatval($amount),
+            $currency,
+            json_encode($result)
+        );
 
         \Views\Renderer::render("paypal/accept", $dataview);
     }
