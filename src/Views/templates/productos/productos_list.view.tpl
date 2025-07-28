@@ -6,10 +6,9 @@
             <div class="flex align-center">
                 <div class="col-8 row">
                     <input type="hidden" name="page" value="Productos_ProductosList">
-                    
+
                     <label class="col-3" for="partialName">Nombre</label>
-                    <input class="col-9" type="text" name="partialName" id="partialName"
-                        value="{{partialName}}" />
+                    <input class="col-9" type="text" name="partialName" id="partialName" value="{{partialName}}" />
 
                     <label class="col-3" for="status">Estado</label>
                     <select class="col-9" name="status" id="status">
@@ -38,7 +37,9 @@
                 <th>Stock</th>
                 <th>Estado</th>
                 <th>
+                    {{if product_INS}}
                     <a href="index.php?page=Productos_ProductosForm&mode=INS">Nuevo</a>
+                    {{endif product_INS}}
                 </th>
             </tr>
         </thead>
@@ -55,16 +56,23 @@
                 <td class="center">{{productStock}}</td>
                 <td class="center">{{productStatusDsc}}</td>
                 <td class="center">
+                    {{if product_DSP}}
                     <a href="index.php?page=Productos_ProductosForm&mode=DSP&productId={{productId}}">Ver</a>
-                    &nbsp;
+
                     <a href="index.php?page=Productos_ProductosForm&mode=UPD&productId={{productId}}">Editar</a>
                     &nbsp;
                     <a href="index.php?page=Productos_ProductosForm&mode=DEL&productId={{productId}}">Eliminar</a>
+                    {{endif product_DSP}}
+                    {{if product_UPD}}
+                    &nbsp;<a href="index.php?page=Productos_ProductosForm&mode=UPD&productId={{productId}}">Editar</a>
+                    {{endif product_UPD}}
+                    {{if product_DEL}}
+                    &nbsp;<a href="index.php?page=Productos_ProductosForm&mode=DEL&productId={{productId}}">Eliminar</a>
+                    {{endif product_DEL}}
                 </td>
             </tr>
             {{endfor productos}}
         </tbody>
     </table>
-
     {{pagination}}
 </section>

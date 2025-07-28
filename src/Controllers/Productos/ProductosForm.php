@@ -50,20 +50,20 @@ class ProductosForm extends PrivateController
     private function getData(): void
     {
         $this->mode = $_GET["mode"] ?? "NOF";
-        if (!isset($this->modeDescriptions[$this->mode])) {
-            throw new \Exception("Modo inválido", 1);
-        }
-
-        $this->readonly = $this->mode === "DEL" ? "readonly" : "";
-        $this->showCommitBtn = $this->mode !== "DSP";
-
-        if ($this->mode !== "INS") {
-            $productId = intval($_GET["productId"] ?? 0);
-            $productoDB = DaoProductos::getByPrimaryKey($productId);
-            if (!$productoDB) {
-                throw new \Exception("Producto no encontrado", 1);
+        if (isset($this->modeDescriptions[$this->mode])) {
+            if (!$this->isFeatureAutorized("product_" . $this->mode)) {
+                throw new \Exception("No tiene permisos para realizar esta acción.", 1);
             }
-            $this->producto = $productoDB;
+            $this->readonly = $this->mode === "DEL" ? "readonly" : "";
+            $this->showCommitBtn = $this->mode !== "DSP";
+            if ($this->mode !== "INS") {
+                $this->producto = DaoProductos::getByPrimaryKey(intval($_GET["productId"]));
+                if (!$this->producto) {
+                    throw new \Exception("No se encontró el Producto", 1);
+                }
+            }
+        } else {
+            throw new \Exception("Formulario cargado en modalidad invalida", 1);
         }
     }
 
