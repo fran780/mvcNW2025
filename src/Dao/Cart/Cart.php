@@ -113,10 +113,13 @@ class Cart extends \Dao\Table
                 return self::executeNonQuery($updateSql, ["anoncod" => $anonCod, "amount" => $amount, "productId" => $productId]);
             }
         } else {
-            return self::executeNonQuery(
-                "INSERT INTO carretillaanon (anoncod, productId, crrctd, crrprc, crrfching) VALUES (:anoncod, :productId, :crrctd, :crrprc, NOW());",
-                ["anoncod" => $anonCod, "productId" => $productId, "crrctd" => $amount, "crrprc" => $price]
-            );
+            if ($amount > 0) {
+                return self::executeNonQuery(
+                    "INSERT INTO carretillaanon (anoncod, productId, crrctd, crrprc, crrfching) VALUES (:anoncod, :productId, :crrctd, :crrprc, NOW());",
+                    ["anoncod" => $anonCod, "productId" => $productId, "crrctd" => $amount, "crrprc" => $price]
+                );
+            }
+            return 0;
         }
     }
 
@@ -147,10 +150,13 @@ class Cart extends \Dao\Table
                 return self::executeNonQuery($updateSql, ["usercod" => $usercod, "amount" => $amount, "productId" => $productId]);
             }
         } else {
-            return self::executeNonQuery(
-                "INSERT INTO carretilla (usercod, productId, crrctd, crrprc, crrfching) VALUES (:usercod, :productId, :crrctd, :crrprc, NOW());",
-                ["usercod" => $usercod, "productId" => $productId, "crrctd" => $amount, "crrprc" => $price]
-            );
+            if ($amount > 0) {
+                return self::executeNonQuery(
+                    "INSERT INTO carretilla (usercod, productId, crrctd, crrprc, crrfching) VALUES (:usercod, :productId, :crrctd, :crrprc, NOW());",
+                    ["usercod" => $usercod, "productId" => $productId, "crrctd" => $amount, "crrprc" => $price]
+                );
+            }
+            return 0;
         }
     }
 
@@ -173,7 +179,7 @@ class Cart extends \Dao\Table
         $productosDisponibles = self::obtenerRegistros($sqlAllProductosActivos, array("productId" => $productId));
         return $productosDisponibles;
     }
- public static function finalizeCart(int $usercod)
+    public static function finalizeCart(int $usercod)
     {
         $itemsSql = "SELECT productId, crrctd FROM carretilla WHERE usercod = :usercod;";
         $items = self::obtenerRegistros($itemsSql, ["usercod" => $usercod]);
@@ -192,7 +198,7 @@ class Cart extends \Dao\Table
         $deleteSql = "DELETE FROM carretilla WHERE usercod = :usercod;";
         self::executeNonQuery($deleteSql, ["usercod" => $usercod]);
     }
-      public static function clearCart(int $usercod)
+    public static function clearCart(int $usercod)
     {
         $deleteSql = "DELETE FROM carretilla WHERE usercod = :usercod;";
         self::executeNonQuery($deleteSql, ["usercod" => $usercod]);

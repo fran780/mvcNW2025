@@ -9,8 +9,8 @@
 
     <div class="row my-2 align-center">
       <label class="col-12 col-m-3" for="usercodD">Código</label>
-      <input class="col-12 col-m-9" readonly disabled type="text" name="usercodD" id="usercodD"
-        placeholder="Código" value="{{usercod}}" />
+      <input class="col-12 col-m-9" readonly disabled type="text" name="usercodD" id="usercodD" placeholder="Código"
+        value="{{usercod}}" />
       <input type="hidden" name="mode" value="{{~mode}}" />
       <input type="hidden" name="usercod" value="{{usercod}}" />
       <input type="hidden" name="usuario_xss_token" value="{{~usuario_xss_token}}" />
@@ -18,7 +18,7 @@
 
     <div class="row my-2 align-center">
       <label class="col-12 col-m-3" for="username">Nombre</label>
-      <input class="col-12 col-m-9" {{~readonly}} type="email" name="username" id="username"
+      <input class="col-12 col-m-9" {{~readonly}} type="text" name="username" id="username"
         placeholder="Nombre del Usuario" value="{{username}}" />
       {{if username_error}}
       <div class="col-12 col-m-9 offset-m-3 error">{{username_error}}</div>
@@ -27,7 +27,7 @@
 
     <div class="row my-2 align-center">
       <label class="col-12 col-m-3" for="useremail">Correo</label>
-      <input class="col-12 col-m-9" {{~readonly}} type="text" name="useremail" id="useremail"
+      <input class="col-12 col-m-9" {{~readonly}} type="email" name="useremail" id="useremail"
         placeholder="Correo del Usuario" value="{{useremail}}" />
       {{if useremail_error}}
       <div class="col-12 col-m-9 offset-m-3 error">{{useremail_error}}</div>
