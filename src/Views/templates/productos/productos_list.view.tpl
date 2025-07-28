@@ -58,10 +58,6 @@
                 <td class="center">
                     {{if product_DSP}}
                     <a href="index.php?page=Productos_ProductosForm&mode=DSP&productId={{productId}}">Ver</a>
-
-                    <a href="index.php?page=Productos_ProductosForm&mode=UPD&productId={{productId}}">Editar</a>
-                    &nbsp;
-                    <a href="index.php?page=Productos_ProductosForm&mode=DEL&productId={{productId}}">Eliminar</a>
                     {{endif product_DSP}}
                     {{if product_UPD}}
                     &nbsp;<a href="index.php?page=Productos_ProductosForm&mode=UPD&productId={{productId}}">Editar</a>
