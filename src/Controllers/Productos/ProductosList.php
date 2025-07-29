@@ -68,11 +68,6 @@ class ProductosList extends PrivateController
         if ($this->itemsPerPage < 1) {
             $this->itemsPerPage = 10;
         }
-
-        $this->product_DSP = $this->isFeatureAutorized("product_DSP");
-        $this->product_UPD = $this->isFeatureAutorized("product_UPD");
-        $this->product_DEL = $this->isFeatureAutorized("product_DEL");
-        $this->product_INS = $this->isFeatureAutorized("product_INS");
     }
 
     private function getParamsFromContext(): void
@@ -88,6 +83,11 @@ class ProductosList extends PrivateController
         if ($this->itemsPerPage < 1) {
             $this->itemsPerPage = 10;
         }
+
+        $this->product_DSP = $this->isFeatureAutorized("productos_DSP");
+        $this->product_UPD = $this->isFeatureAutorized("productos_UPD");
+        $this->product_DEL = $this->isFeatureAutorized("productos_DEL");
+        $this->product_INS = $this->isFeatureAutorized("productos_INS");
     }
 
     private function setParamsToContext(): void
@@ -110,7 +110,7 @@ class ProductosList extends PrivateController
         $this->viewData["product_UPD"] = $this->product_UPD;
         $this->viewData["product_DEL"] = $this->product_DEL;
         $this->viewData["product_INS"] = $this->product_INS;
-        
+
         $statusKey = "status_" . ($this->status === "" ? "EMP" : $this->status);
         $this->viewData[$statusKey] = "selected";
 

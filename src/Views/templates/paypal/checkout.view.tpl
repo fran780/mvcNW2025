@@ -35,7 +35,7 @@
       </form>
       <form action="index.php?page=checkout_checkout" method="post" class="col-6 right">
         <button type="submit" class="btn-confirm">
-          <i class="fas fa-check-circle"></i> Realizar pedido
+          <i class="fas fa-check-circle"></i> Finalizar compra
         </button>
       </form>
     </div>

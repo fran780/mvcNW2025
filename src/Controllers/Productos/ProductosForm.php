@@ -53,7 +53,7 @@ class ProductosForm extends PrivateController
         if (!isset($this->modeDescriptions[$this->mode])) {
             throw new \Exception("Modo inválido", 1);
         }
-          if (!$this->isFeatureAutorized("product_" . $this->mode)) {
+          if (!$this->isFeatureAutorized("productos_" . $this->mode)) {
             throw new \Exception("No tiene permisos para realizar esta acción.", 1);
         }
 

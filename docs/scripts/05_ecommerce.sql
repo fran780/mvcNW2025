@@ -276,3 +276,29 @@ VALUES (
         '2023-08-01 00:00:00',
         '2023-10-31 23:59:59'
     );
+
+
+    INSERT INTO `electronics_products` 
+(`productName`, `productDescription`, `productPrice`, `productImgUrl`, `productStock`, `productStatus`) 
+VALUES
+-- 1
+('Laptop HP Pavilion 15', 'Laptop con Intel Core i5, 8GB RAM, 512GB SSD y pantalla Full HD de 15.6".', 599.99, 'https://placehold.co/290x250?text=HP+Pavilion+15', 10, 'ACT'),
+-- 2
+('Smartphone Samsung Galaxy S24', 'Teléfono inteligente con pantalla AMOLED de 6.8", 256GB de almacenamiento y cámara de 200MP.', 899.00, 'https://placehold.co/290x250?text=Samsung+Galaxy+S24', 15, 'ACT'),
+-- 3
+('Smart TV LG 55"', 'Televisor inteligente 4K UHD con WebOS, compatible con Alexa y Google Assistant.', 649.50, 'https://placehold.co/290x250?text=LG+Smart+TV+55', 8, 'ACT'),
+-- 4
+('Audífonos Sony WH-1000XM5', 'Audífonos inalámbricos con cancelación activa de ruido y batería de hasta 30 horas.', 349.00, 'https://placehold.co/290x250?text=Sony+WH-1000XM5', 25, 'ACT'),
+-- 5
+('Cámara Canon EOS Rebel T7', 'Cámara réflex digital con sensor de 24.1 MP y lente 18-55mm incluida.', 479.99, 'https://placehold.co/290x250?text=Canon+EOS+T7', 5, 'ACT'),
+-- 6
+('Consola PlayStation 5', 'Consola de videojuegos de última generación con SSD ultra rápido y control DualSense.', 699.00, 'https://placehold.co/290x250?text=PS5+Console', 7, 'ACT'),
+-- 7
+('Reloj Apple Watch Series 9', 'Reloj inteligente con pantalla Always-On, seguimiento de salud y GPS integrado.', 399.00, 'https://placehold.co/290x250?text=Apple+Watch+S9', 12, 'ACT'),
+-- 8
+('Tablet Xiaomi Pad 6', 'Tablet con pantalla de 11", procesador Snapdragon 870, 128GB de almacenamiento y batería de larga duración.', 319.90, 'https://placehold.co/290x250?text=Xiaomi+Pad+6', 9, 'ACT'),
+-- 9
+('Proyector Epson PowerLite X49', 'Proyector XGA con 3600 lúmenes, ideal para presentaciones y clases.', 429.99, 'https://placehold.co/290x250?text=Epson+X49', 6, 'INA'),
+-- 10
+('Bocina JBL Charge 5', 'Altavoz portátil Bluetooth con sonido potente, batería de 20 horas y resistencia al agua.', 149.99, 'https://placehold.co/290x250?text=JBL+Charge+5', 0, 'INA');
+

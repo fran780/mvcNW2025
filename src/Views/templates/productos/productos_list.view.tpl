@@ -37,9 +37,9 @@
                 <th>Stock</th>
                 <th>Estado</th>
                 <th>
-                    {{if product_INS}}
+                    {{if ~product_INS}}
                     <a href="index.php?page=Productos_ProductosForm&mode=INS">Nuevo</a>
-                    {{endif product_INS}}
+                    {{endif ~product_INS}}
                 </th>
             </tr>
         </thead>
@@ -56,15 +56,15 @@
                 <td class="center">{{productStock}}</td>
                 <td class="center">{{productStatusDsc}}</td>
                 <td class="center">
-                    {{if product_DSP}}
+                    {{if ~product_DSP}}
                     <a href="index.php?page=Productos_ProductosForm&mode=DSP&productId={{productId}}">Ver</a>
-                    {{endif product_DSP}}
-                    {{if product_UPD}}
+                    {{endif ~product_DSP}}
+                    {{if ~product_UPD}}
                     &nbsp;<a href="index.php?page=Productos_ProductosForm&mode=UPD&productId={{productId}}">Editar</a>
-                    {{endif product_UPD}}
-                    {{if product_DEL}}
+                    {{endif ~product_UPD}}
+                    {{if ~product_DEL}}
                     &nbsp;<a href="index.php?page=Productos_ProductosForm&mode=DEL&productId={{productId}}">Eliminar</a>
-                    {{endif product_DEL}}
+                    {{endif ~product_DEL}}
                 </td>
             </tr>
             {{endfor productos}}
