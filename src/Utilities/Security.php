@@ -11,6 +11,8 @@ class Security
     public static function logout()
     {
         unset($_SESSION["login"]);
+        // permite que las cookies no molesten al usuario
+        \Utilities\Nav::invalidateNavData();
     }
     public static function login($userId, $userName, $userEmail)
     {
@@ -20,6 +22,8 @@ class Security
             "userName" => $userName,
             "userEmail" => $userEmail
         );
+        //permite que las cookies no molesten al usuario
+        \Utilities\Nav::invalidateNavData();
     }
     public static function isLogged(): bool
     {
@@ -58,5 +62,17 @@ class Security
             }
         }
         return DaoSecurity::isUsuarioInRol($userId, $rol);
+    }
+
+    // sirve para ocultar carrito y precios a admin y eci
+    public static function isAdminOrEci($userId = null): bool
+    {
+        if ($userId === null) {
+            $userId = self::getUserId();
+        }
+        if (!$userId) {
+            return false;
+        }
+        return self::isInRol($userId, 'ADMIN') || self::isInRol($userId, 'ECI');
     }
 }

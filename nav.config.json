@@ -9,6 +9,11 @@
       "id": "Menu_SignUp",
       "nav_url": "index.php?page=Sec_Register",
       "nav_label": "<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Crear Cuenta"
+    },
+    {
+      "id": "Menu_FAQ",
+      "nav_url": "index.php?page=Faq",
+      "nav_label": "<i class=\"fas fa-question-circle\"></i>&nbsp;Preguntas Frecuentes"
     }
   ],
   "private": [

@@ -39,7 +39,8 @@ class Index extends PublicController
         Site::addLink("public/css/products.css");
 
         if ($this->isPostBack()) {
-            if (Security::isLogged()) {
+             if (Security::isLogged()) {
+            if (!Security::isAdminOrEci()) {
                 $usercod = Security::getUserId();
                 $productId = intval($_POST["productId"]);
                 $product = Cart::getProductoDisponible($productId);
@@ -51,6 +52,7 @@ class Index extends PublicController
                         $product["productPrice"]
                     );
                 }
+            }
             } else {
                 $cartAnonCod = CartFns::getAnnonCartCode();
                 if (isset($_POST["addToCart"])) {
@@ -77,6 +79,3 @@ class Index extends PublicController
         \Views\Renderer::render("index", $viewData);
     }
 }
-
-
-//cambios

@@ -15,11 +15,9 @@ class Checkout extends PrivateController
 
         $viewData = [];
 
-        // ✅ Obtener la carretilla actual del usuario logueado
         $carretilla = Cart::getAuthCart(Security::getUserId());
 
         if ($this->isPostBack()) {
-            // ✅ Cancelar compra y vaciar carretilla
             if (isset($_POST["cancelPurchase"])) {
                 Cart::clearCart(Security::getUserId());
                 \Utilities\Context::setContext("CART_ITEMS", 0);
@@ -27,7 +25,6 @@ class Checkout extends PrivateController
                 return;
             }
 
-            // ✅ Verificar que la carretilla no esté vacía o con cantidades inválidas
             if (!is_array($carretilla) || count($carretilla) === 0) {
                 Site::redirectTo("index.php?page=Carretilla_Carretilla");
                 return;
@@ -45,7 +42,6 @@ class Checkout extends PrivateController
                 return;
             }
 
-            // ✅ Procesar pago
             $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
                 "test" . (time() - 10000000),
                 "http://localhost/negociosweb/mvc/index.php?page=Checkout_Error",
@@ -89,7 +85,6 @@ class Checkout extends PrivateController
             die();
         }
 
-        // ✅ Preparar datos para la vista
         $finalCarretilla = [];
         $counter = 1;
         $total = 0;

@@ -130,7 +130,19 @@ INSERT INTO `funciones` (`fncod`, `fndsc`, `fnest`, `fntyp`) VALUES
 ('productos_INS', 'Agregar Productos', 'ACT', 'FNC'),
 ('productos_UPD', 'Editar Productos', 'ACT', 'FNC');
 
+INSERT INTO `funciones` (`fncod`, `fndsc`, `fnest`, `fntyp`) VALUES
+('Controllers\\Checkout\\History', 'Listado Historial de Transacciones', 'ACT', 'CTR'),
+('Controllers\\Checkout\\HistoryDetail', 'Formulario de Historial de Transacciones', 'ACT', 'CTR');
 -- --------------------------------------------------------
+
+INSERT INTO `funciones_roles` (`rolescod`, `fncod`, `fnrolest`, `fnexp`) VALUES
+('ADMIN', 'Controllers\\Productos\\ProductosForm', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Controllers\\Productos\\ProductosList', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Menu_Productos', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_DEL', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_DSP', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_INS', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_UPD', 'ACT', DATE_ADD(NOW(), INTERVAL 1 YEAR));
 
 --
 -- Estructura de tabla para la tabla `funciones_roles`
@@ -148,28 +160,30 @@ CREATE TABLE `funciones_roles` (
 --
 
 INSERT INTO `funciones_roles` (`rolescod`, `fncod`, `fnrolest`, `fnexp`) VALUES
-('ADMIN', 'Controllers\\Productos\\ProductosForm', 'ACT', '2026-07-27 12:20:54'),
-('ADMIN', 'Controllers\\Productos\\ProductosList', 'ACT', '2026-07-27 12:22:02'),
-('ADMIN', 'Controllers\\Usuarios\\Usuario', 'ACT', '2026-07-27 13:18:12'),
-('ADMIN', 'Controllers\\Usuarios\\Usuarios', 'ACT', '2026-07-27 13:18:04'),
-('ADMIN', 'Menu_Productos', 'ACT', '2026-07-27 12:35:50'),
-('ADMIN', 'Menu_Usuarios', 'ACT', '2026-07-27 13:32:42'),
-('ADMIN', 'productos_DEL', 'ACT', '2026-07-28 11:49:07'),
-('ADMIN', 'productos_DSP', 'ACT', '2026-07-28 11:49:07'),
-('ADMIN', 'productos_INS', 'ACT', '2026-07-28 11:49:07'),
-('ADMIN', 'productos_UPD', 'ACT', '2026-07-28 11:49:07'),
-('CLI', 'Controllers\\Checkout\\Checkout', 'ACT', '2026-07-27 03:14:24'),
-('CLI', 'Controllers\\Checkout\\History', 'ACT', '2026-07-27 03:14:24'),
-('CLI', 'Controllers\\Checkout\\HistoryDetail', 'ACT', '2026-07-27 03:14:24'),
-('CLI', 'Menu_TransHist', 'ACT', '2026-07-27 03:53:23'),
-('ECI', 'Controllers\\Productos\\ProductosForm', 'ACT', '2026-07-28 12:46:45'),
-('ECI', 'Controllers\\Productos\\ProductosList', 'ACT', '2026-07-28 12:39:23'),
-('ECI', 'Menu_Productos', 'ACT', '2026-07-28 12:40:32'),
-('ECI', 'productos_DSP', 'ACT', '2026-07-28 12:42:16'),
-('ECI', 'productos_UPD', 'ACT', '2026-07-28 12:42:16');
+('ADMIN', 'Controllers\\Productos\\ProductosForm', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Controllers\\Productos\\ProductosList', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Controllers\\Usuarios\\Usuario', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Controllers\\Usuarios\\Usuarios', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Menu_Productos', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'Menu_Usuarios', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_DEL', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_DSP', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_INS', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ADMIN', 'productos_UPD', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('CLI', 'Controllers\\Checkout\\Checkout', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('CLI', 'Controllers\\Checkout\\History', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('CLI', 'Controllers\\Checkout\\HistoryDetail', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('CLI', 'Menu_TransHist', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ECI', 'Controllers\\Productos\\ProductosForm', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ECI', 'Controllers\\Productos\\ProductosList', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ECI', 'Menu_Productos', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ECI', 'productos_DSP', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('ECI', 'productos_UPD', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR));
 
+INSERT INTO `funciones_roles` (`rolescod`, `fncod`, `fnrolest`, `fnexp`) VALUES
+('CLI', 'Controllers\\Checkout\\HistoryDetail', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+('CLI', 'Controllers\\Checkout\\History', 'ACT',  DATE_ADD(NOW(), INTERVAL 1 YEAR));
 -- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `highlights`
 --
@@ -225,6 +239,12 @@ INSERT INTO `roles_usuarios` (`usercod`, `rolescod`, `roleuserest`, `roleuserfch
 (2, 'ECI', 'ACT', '2025-07-28 12:48:34', '2026-07-28 12:48:34'),
 (3, 'CLI', 'ACT', '2025-07-27 03:02:02', '2026-07-27 03:02:02'),
 (4, 'CLI', 'ACT', '2025-07-28 12:32:19', '2026-07-28 12:32:19');
+
+INSERT INTO roles_usuario (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES
+(1, 'ADMIN', 'ACT', NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+(2, 'CLI', 'ACT', NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+(3, 'ECI', 'ACT', NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR)),
+(4, 'CLI', 'ACT', NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR));
 
 -- --------------------------------------------------------
 
